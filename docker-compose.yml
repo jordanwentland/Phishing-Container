@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+    nginx-certbot:
+        image: "jordanwentland/nginx-certbot"
+        ports:
+            - "80:80"
+            - "443:443"
+        networks:
+            GoPhish_net:
+                ipv4_address: 172.18.0.2
+        stdin_open: true
+        tty: true
+    GoPhish:
+        image: "gophish/gophish"
+        ports:
+            - "3333:3333"
+        networks:
+            GoPhish_net:
+                ipv4_address: 172.18.0.3
+networks:
+    GoPhish_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.18.0.0/24
